@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>訂單郵件萃取 Skill</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ee;
+      --ink: #202124;
+      --muted: #5f6368;
+      --panel: #ffffff;
+      --line: #d8d2c7;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --code: #10201f;
+      --code-bg: #e7f1ee;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 56px 24px 36px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent-dark);
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    section {
+      margin-top: 28px;
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 20px 0 8px;
+      font-size: 1.08rem;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.35rem;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    code {
+      padding: 0.12em 0.35em;
+      border-radius: 4px;
+      background: var(--code-bg);
+      color: var(--code);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 14px 0 0;
+      padding: 18px;
+      border-radius: 8px;
+      background: #142321;
+      color: #f4fbf9;
+      line-height: 1.65;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .mini {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfaf7;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--accent-dark);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .button.secondary {
+      background: #ffffff;
+      color: var(--accent-dark);
+      border: 1px solid var(--accent);
+    }
+
+    footer {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 0 0 40px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding-top: 40px;
+      }
+
+      section {
+        padding: 22px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <p class="eyebrow">Codex Skill</p>
+      <h1>訂單郵件萃取</h1>
+      <p class="lead">
+        將客戶零散的電子郵件、聊天式訂購訊息或非正式需求，整理成標準化的繁體中文訂單清單。
+      </p>
+      <div class="button-row">
+        <a class="button" href="#usage">查看使用方式</a>
+        <a class="button secondary" href="#example">查看輸出範例</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>角色設定</h2>
+      <p>
+        這個 Skill 的角色是一位專業的「訂單管理與資料分析秘書」。它會從客戶訊息中過濾寒暄、簽名檔與無關內容，只保留可用於訂單管理的資訊。
+      </p>
+      <div class="grid">
+        <div class="mini">
+          <strong>資料整理</strong>
+          將姓名、電話、地址、產品、規格、數量與交期整理成固定欄位。
+        </div>
+        <div class="mini">
+          <strong>格式統一</strong>
+          尺寸轉為 <code>mm</code>，數量轉為 <code>pcs</code>，日期轉為 <code>YYYY/MM/DD</code>。
+        </div>
+        <div class="mini">
+          <strong>缺漏標示</strong>
+          當資訊不足或語意不明時，以「待確認」標註，不自行編造。
+        </div>
+        <div class="mini">
+          <strong>專業建議</strong>
+          根據產品需求補充 1-2 個製作、材料或交付建議。
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>萃取欄位</h2>
+      <ul>
+        <li>客戶資料：姓名、聯絡電話、收件地址或取貨方式。</li>
+        <li>產品類別：客製化公仔、寵物紀念盒、工業零件原型等。</li>
+        <li>設計主題：生物種類、花色、姿勢、配件與特定造型描述。</li>
+        <li>技術規格：尺寸、填充密度、材料、顏色、容差與表面處理。</li>
+        <li>交付資訊：訂單數量與希望收件日期。</li>
+        <li>備註事項：照片參考、送禮用途、包裝、急件或預算等。</li>
+      </ul>
+    </section>
+
+    <section id="usage">
+      <h2>使用方式</h2>
+      <p>在 Codex 中輸入以下格式，並貼上客戶郵件內容：</p>
+      <pre><code>Use $extract-order-emails 幫我整理下面這封客戶郵件：
+
+嗨您好，我想做一隻橘貓公仔，大概高 8 公分，坐姿，要有紅色項圈。
+數量先做 2 個，希望 2026/4/10 前收到，是要送朋友的生日禮物。
+電話 0912-345-678，寄到台北市信義區...</code></pre>
+    </section>
+
+    <section id="example">
+      <h2>輸出範例</h2>
+      <pre><code>【訂單提取結果】
+
+- 客戶姓名：待確認
+- 聯絡電話：0912-345-678
+- 收件地址／取貨方式：台北市信義區...
+- 產品類別：客製化公仔
+- 設計主題：橘貓公仔，坐姿，紅色項圈
+- 技術規格：高 80mm；顏色要求：橘貓配色、紅色項圈
+- 交付資訊：2 pcs；希望收件日期：2026/04/10
+- 備註事項：送朋友的生日禮物
+- 待補資訊：客戶姓名、完整收件地址
+
+【專業建議】
+
+- 建議使用樹脂列印以提升貓咪毛色、坐姿輪廓與項圈細節。
+- 若作為禮物，建議確認是否需要加購透明展示盒或禮盒包裝。</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>此頁面展示一個用於整理客戶訂單郵件的 Codex Skill。</p>
+  </footer>
+</body>
+</html>
