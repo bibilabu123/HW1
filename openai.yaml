@@ -1,0 +1,7 @@
+interface:
+  display_name: "訂單郵件萃取"
+  short_description: "從零散客戶郵件整理標準化訂單清單、待補資訊與專業建議"
+  default_prompt: "Use $extract-order-emails to turn a customer email into a standardized Traditional Chinese order extraction list."
+
+policy:
+  allow_implicit_invocation: true
